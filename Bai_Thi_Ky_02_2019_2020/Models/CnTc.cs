@@ -1,18 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
-
-// Code scaffolded by EF Core assumes nullable reference types (NRTs) are not used or disabled.
-// If you have enabled NRTs for your project, then un-comment the following line:
-// #nullable disable
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Bai_Thi_Ky_02_2019_2020.Models
 {
-    public partial class CnTc
-    {
-        public string MaCongNhan { get; set; }
-        public string MaTrieuChung { get; set; }
+    public  class CnTc
 
-        public virtual Congnhan MaCongNhanNavigation { get; set; }
-        public virtual Trieuchung MaTrieuChungNavigation { get; set; }
+
+    {
+        [Display(Name = "Mã công nhân")]
+        [StringLength(10, ErrorMessage = "Mã công nhân < 10 kí tự")]
+        public string MaCongNhan { get; set; }
+        [ForeignKey("MaCongNhan")]
+
+        [Display(Name = "Mã triệu chứng")]
+        [StringLength(10, ErrorMessage = "Mã triệu chứng < 10 kí tự")]
+        public string MaTrieuChung { get; set; }
+        [ForeignKey("MaTrieuChung")]
+
+        public  Congnhan MaCongNhanNavigation { get; set; }
+        public  Trieuchung MaTrieuChungNavigation { get; set; }
     }
 }

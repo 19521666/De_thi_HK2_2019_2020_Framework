@@ -5,27 +5,27 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Bai_Thi_Ky_02_2019_2020.Data;
 using Bai_Thi_Ky_02_2019_2020.Models;
 
 namespace Bai_Thi_Ky_02_2019_2020.Controllers
 {
-    public class CongnhanController : Controller
+    public class DiemcachliesController : Controller
     {
-        private readonly qlclContext _context;
+        private readonly QLCLContext _context;
 
-        public CongnhanController(qlclContext context)
+        public DiemcachliesController(QLCLContext context)
         {
             _context = context;
         }
 
-        // GET: Congnhan
+        // GET: Diemcachlies
         public async Task<IActionResult> Index()
         {
-            var qlclContext = _context.Congnhan.Include(c => c.MaDiemCachLyNavigation);
-            return View(await qlclContext.ToListAsync());
+            return View(await _context.DiemCachLies.ToListAsync());
         }
 
-        // GET: Congnhan/Details/5
+        // GET: Diemcachlies/Details/5
         public async Task<IActionResult> Details(string id)
         {
             if (id == null)
@@ -33,42 +33,39 @@ namespace Bai_Thi_Ky_02_2019_2020.Controllers
                 return NotFound();
             }
 
-            var congnhan = await _context.Congnhan
-                .Include(c => c.MaDiemCachLyNavigation)
-                .FirstOrDefaultAsync(m => m.MaCongNhan == id);
-            if (congnhan == null)
+            var diemcachly = await _context.DiemCachLies
+                .FirstOrDefaultAsync(m => m.Madiemcachly == id);
+            if (diemcachly == null)
             {
                 return NotFound();
             }
 
-            return View(congnhan);
+            return View(diemcachly);
         }
 
-        // GET: Congnhan/Create
+        // GET: Diemcachlies/Create
         public IActionResult Create()
         {
-            ViewData["MaDiemCachLy"] = new SelectList(_context.Diemcachly, "Madiemcachly", "Madiemcachly");
             return View();
         }
 
-        // POST: Congnhan/Create
+        // POST: Diemcachlies/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("MaCongNhan,TenCongNhan,GioiTinh,NamSinh,NuocVe,MaDiemCachLy")] Congnhan congnhan)
+        public async Task<IActionResult> Create([Bind("Madiemcachly,Tendiemcachly,Diachi")] Diemcachly diemcachly)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(congnhan);
+                _context.Add(diemcachly);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["MaDiemCachLy"] = new SelectList(_context.Diemcachly, "Madiemcachly", "Madiemcachly", congnhan.MaDiemCachLy);
-            return View(congnhan);
+            return View(diemcachly);
         }
 
-        // GET: Congnhan/Edit/5
+        // GET: Diemcachlies/Edit/5
         public async Task<IActionResult> Edit(string id)
         {
             if (id == null)
@@ -76,23 +73,22 @@ namespace Bai_Thi_Ky_02_2019_2020.Controllers
                 return NotFound();
             }
 
-            var congnhan = await _context.Congnhan.FindAsync(id);
-            if (congnhan == null)
+            var diemcachly = await _context.DiemCachLies.FindAsync(id);
+            if (diemcachly == null)
             {
                 return NotFound();
             }
-            ViewData["MaDiemCachLy"] = new SelectList(_context.Diemcachly, "Madiemcachly", "Madiemcachly", congnhan.MaDiemCachLy);
-            return View(congnhan);
+            return View(diemcachly);
         }
 
-        // POST: Congnhan/Edit/5
+        // POST: Diemcachlies/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("MaCongNhan,TenCongNhan,GioiTinh,NamSinh,NuocVe,MaDiemCachLy")] Congnhan congnhan)
+        public async Task<IActionResult> Edit(string id, [Bind("Madiemcachly,Tendiemcachly,Diachi")] Diemcachly diemcachly)
         {
-            if (id != congnhan.MaCongNhan)
+            if (id != diemcachly.Madiemcachly)
             {
                 return NotFound();
             }
@@ -101,12 +97,12 @@ namespace Bai_Thi_Ky_02_2019_2020.Controllers
             {
                 try
                 {
-                    _context.Update(congnhan);
+                    _context.Update(diemcachly);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!CongnhanExists(congnhan.MaCongNhan))
+                    if (!DiemcachlyExists(diemcachly.Madiemcachly))
                     {
                         return NotFound();
                     }
@@ -117,11 +113,10 @@ namespace Bai_Thi_Ky_02_2019_2020.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["MaDiemCachLy"] = new SelectList(_context.Diemcachly, "Madiemcachly", "Madiemcachly", congnhan.MaDiemCachLy);
-            return View(congnhan);
+            return View(diemcachly);
         }
 
-        // GET: Congnhan/Delete/5
+        // GET: Diemcachlies/Delete/5
         public async Task<IActionResult> Delete(string id)
         {
             if (id == null)
@@ -129,31 +124,30 @@ namespace Bai_Thi_Ky_02_2019_2020.Controllers
                 return NotFound();
             }
 
-            var congnhan = await _context.Congnhan
-                .Include(c => c.MaDiemCachLyNavigation)
-                .FirstOrDefaultAsync(m => m.MaCongNhan == id);
-            if (congnhan == null)
+            var diemcachly = await _context.DiemCachLies
+                .FirstOrDefaultAsync(m => m.Madiemcachly == id);
+            if (diemcachly == null)
             {
                 return NotFound();
             }
 
-            return View(congnhan);
+            return View(diemcachly);
         }
 
-        // POST: Congnhan/Delete/5
+        // POST: Diemcachlies/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(string id)
         {
-            var congnhan = await _context.Congnhan.FindAsync(id);
-            _context.Congnhan.Remove(congnhan);
+            var diemcachly = await _context.DiemCachLies.FindAsync(id);
+            _context.DiemCachLies.Remove(diemcachly);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool CongnhanExists(string id)
+        private bool DiemcachlyExists(string id)
         {
-            return _context.Congnhan.Any(e => e.MaCongNhan == id);
+            return _context.DiemCachLies.Any(e => e.Madiemcachly == id);
         }
     }
 }

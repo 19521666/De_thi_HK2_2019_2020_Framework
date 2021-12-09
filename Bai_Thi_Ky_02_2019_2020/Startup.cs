@@ -8,6 +8,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Bai_Thi_Ky_02_2019_2020.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace Bai_Thi_Ky_02_2019_2020
 {
@@ -24,6 +26,10 @@ namespace Bai_Thi_Ky_02_2019_2020
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+            services.AddDbContext<QLCLContext>(option =>
+            option.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
