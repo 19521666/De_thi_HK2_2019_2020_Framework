@@ -1,0 +1,11 @@
+﻿@model List<Bai_Thi_Ky_02_2019_2020.Models.Congnhan>
+
+<form action="/CongNhan/" method="get">
+    <select name="MaCongNhan" id="MacongNhan">
+        @foreach(var item in Model)
+            {
+                <option value="@item.MaCongNhan">@item.TenCongNhan</option>
+            }
+    </select><br />
+    <input type="submit" value="Liet Ke" name="submit" id="Liet ke" />
+</form>

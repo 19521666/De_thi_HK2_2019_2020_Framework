@@ -8,7 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Bai_Thi_Ky_02_2019_2020.Data;
+using Bai_Thi_Ky_02_2019_2020.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace Bai_Thi_Ky_02_2019_2020
@@ -26,8 +26,9 @@ namespace Bai_Thi_Ky_02_2019_2020
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
-            services.AddDbContext<QLCLContext>(option =>
-            option.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            
+            services.Add(new ServiceDescriptor(typeof(DataContext),
+                new DataContext(Configuration.GetConnectionString("DefaultConnection"))));
 
 
         }

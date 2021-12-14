@@ -1,0 +1,40 @@
+﻿@model List<Object>
+
+@{
+    ViewData["Title"] = "Liet ke so cong nhan theo tung khu cach ly ";
+}
+@if (Model.Count() > 0)
+{
+    <table border="1">
+        <tr>
+            <th>Ma cong nhan</th>
+            <th>Ten cong nhan</th>
+            <th>Chuc nang</th>
+        </tr>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @item.GetType().GetProperty("MaCongNhan").GetValue(item, null);
+                </td>
+                <td>
+                    @item.GetType().GetProperty("TenCongNhan").GetValue(item, null);
+                </td>
+                <td>
+                    <a href="/CongNhan/Delete/?MaCongNhan=@item.GetType().GetProperty("MaCongNhan").GetValue(item, null)">Delete</a>
+                    <a href="/CongNhan/Detail/?MaCongNhan=@item.GetType().GetProperty("MaCongNhan").GetValue(item, null)">View</a>
+                    //<a asp-action="Details" name="@item.GetType().GetProperty("MaCongNhan").GetValue(item, null)">Details</a>
+                    //<a asp-action="Delete" name="@item.GetType().GetProperty("MaCongNhan").GetValue(item, null)">Delete</a>
+                </td>
+
+            </tr>
+        }
+    </table>
+
+}
+
+else
+{
+    <p> Khong co cong nhan tai diem cach ly</p>
+}
+

@@ -1,0 +1,18 @@
+﻿@model Bai_Thi_Ky_02_2019_2020.Models.Congnhan
+
+<form>
+    <label> Ma cong nhan </label> <input value="@Model.MaCongNhan" disabled /> <br />
+    <label> Ten cong nhan </label> <input value="@Model.TenCongNhan" disabled /> <br />
+    <label> Gioi tinh </label>
+    @if(Model.GioiTinh)
+    {
+        <input type="checkbox" checked disabled />
+
+    }
+    else
+    {
+        <input type="checkbox" disabled />
+    }
+    <label> Nam sinh </label> <input value="@Model.NamSinh" disabled /> <br />
+    <label> Nuoc ve </label> <input value="@Model.NuocVe" disabled /> <br />
+</form>
